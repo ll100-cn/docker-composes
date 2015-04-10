@@ -12,6 +12,7 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 EXPOSE 22
 
 RUN apt-get install -y rsync
+RUN apt-get install -y ghostscript
 
 # Nginx - PHP
 RUN apt-get install -y php5-fpm
