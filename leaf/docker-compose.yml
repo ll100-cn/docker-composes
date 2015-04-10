@@ -1,12 +1,13 @@
 mysql:
   image: mysql:5.5.42
   restart: always
-  # env_file: [ mysql_password.yml ] 
+  env_file: [ mysql_password.env ]
   volumes:
     - ../leaf-data/mysql:/var/lib/mysql
 
 redis:
   image: redis:2.8.19
+  restart: always
   volumes:
     - ../leaf-data/redis:/data
 
@@ -30,3 +31,9 @@ nginx:
     - ../leaf-data/web-app:/home/app
   ports:
     - "4022:22"
+
+phpmyadmin:
+  image: splattael/phpmyadmin:latest
+  restart: always
+  links: [ mysql ]
+  ports: [ "8080:80" ]
