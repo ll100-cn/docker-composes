@@ -15,7 +15,7 @@ RUN apt-get install -y rsync
 RUN apt-get install -y ghostscript
 
 # Nginx - PHP
-RUN apt-get install -y php5-fpm
+RUN apt-get install -y php5-fpm php5-mysql
 RUN mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/app.conf
 RUN sed 's/\[www\]/\[app\]/' -i /etc/php5/fpm/pool.d/app.conf
 RUN sed 's/www-data/app/' -i /etc/php5/fpm/pool.d/app.conf
