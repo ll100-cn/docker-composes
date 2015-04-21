@@ -1,0 +1,14 @@
+nginxproxy:
+  image: jwilder/nginx-proxy:0.3.6
+  ports:
+    - "80:80"
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock
+
+nginx:
+  image: nginx:1.7.11
+  restart: always
+  volumes:
+    - ${LL100_DATA_DIR}/nginx/conf.d/ll100.conf:/etc/nginx/conf.d/ll100.conf
+  environment:
+    - VIRTUAL_HOST=ll100.cn,ll100.net,*.ll100.net
