@@ -1,0 +1,8 @@
+nginx:
+  image: nginx:1.7.11
+  restart: always
+  environment:
+    - VIRTUAL_HOST=apps.ll100.cn
+    - ROLE=nginx
+  volumes:
+    - ${PETAL_DATA_DIR}/nginx/html:/usr/share/nginx/html
