@@ -4,9 +4,11 @@
 # a list of version numbers.
 FROM phusion/passenger-customizable:0.9.15
 
+RUN apt-get update # 20150424
 RUN /pd_build/utilities.sh
 RUN /pd_build/ruby2.2.sh
 
+RUN usermod -a -G docker_env app
 RUN rm -f /etc/service/sshd/down
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 EXPOSE 22

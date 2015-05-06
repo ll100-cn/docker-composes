@@ -11,8 +11,12 @@ redis:
   volumes:
     - ${LEAF_DATA_DIR}/redis:/data
 
-sidekiq:
+app:
   build: .
+  command: echo image container
+
+sidekiq:
+  image: leaf_app:latest
   links: [ mysql, redis ]
   restart: always
   environment:
@@ -20,8 +24,8 @@ sidekiq:
   volumes:
     - ${LEAF_DATA_DIR}/web-app:/home/app
 
-nginx:
-  build: .
+passenger:
+  image: leaf_app:latest
   links: [ mysql, redis ]
   restart: always
   environment:
@@ -33,8 +37,21 @@ nginx:
     - "4022:22"
     - "8081:80"
 
+sftp:
+  image: leaf_app:latest
+  restart: always
+  env_file: [ sftp.env ]
+  environment:
+    - ROLE=sftp
+  volumes:
+    - ${LEAF_DATA_DIR}/web-app/shared/import:/home/app/shared/import
+  ports:
+    - "4023:22"
+
 phpmyadmin:
   image: splattael/phpmyadmin:latest
   restart: always
   links: [ mysql ]
   ports: [ "8080:80" ]
+  environment:
+    - VIRTUAL_HOST=dev.ll100.cn
