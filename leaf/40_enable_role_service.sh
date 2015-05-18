@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if [[ $ROLE == *"nginx"* ]]; then
-	rm -f /etc/service/php5-fpm/down
+if [[ $ROLE == *"passenger"* ]]; then
 	rm -f /etc/service/nginx/down
 fi
 
@@ -12,4 +11,9 @@ fi
 
 if [[ $ROLE == *"sftp"* ]]; then
 	[ -n $APP_PASSWORD ] && echo "app:$APP_PASSWORD" | chpasswd
+fi
+
+if [[ $ROLE == *"deploy"* ]]; then
+	mv /etc/logrotate.d/nginx.disabled /etc/logrotate.d/nginx
+	mv /etc/logrotate.d/app.disabled /etc/logrotate.d/app
 fi

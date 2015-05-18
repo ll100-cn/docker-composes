@@ -15,6 +15,18 @@ app:
   build: .
   command: echo image container
 
+deploy:
+  image: leaf_app:latest
+  links: [ mysql, redis ]
+  restart: always
+  environment:
+    - ROLE=deploy
+  volumes:
+    - ${LEAF_DATA_DIR}/web-app:/home/app
+    - ${LEAF_DATA_DIR}/log/nginx:/var/log/nginx
+  ports:
+    - "4022:22"
+
 sidekiq:
   image: leaf_app:latest
   links: [ mysql, redis ]
@@ -30,12 +42,10 @@ passenger:
   restart: always
   environment:
     - VIRTUAL_HOST=www.ll100.cn
-    - ROLE=nginx
+    - ROLE=passenger
   volumes:
     - ${LEAF_DATA_DIR}/web-app:/home/app
-  ports:
-    - "4022:22"
-    - "8081:80"
+    - ${LEAF_DATA_DIR}/log/nginx:/var/log/nginx
 
 sftp:
   image: leaf_app:latest
@@ -48,10 +58,10 @@ sftp:
   ports:
     - "4023:22"
 
-phpmyadmin:
-  image: splattael/phpmyadmin:latest
-  restart: always
-  links: [ mysql ]
-  ports: [ "8080:80" ]
-  environment:
-    - VIRTUAL_HOST=dev.ll100.cn
+# phpmyadmin:
+#   image: splattael/phpmyadmin:latest
+#   restart: always
+#   links: [ mysql ]
+#   ports: [ "8080:80" ]
+#   environment:
+#     - VIRTUAL_HOST=dev.ll100.cn
