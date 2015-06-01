@@ -20,6 +20,10 @@ RUN apt-get install -y ghostscript
 RUN echo Asia/Shanghai > /etc/timezone
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
+# SSH
+RUN sed 's/#ClientAliveInterval 0/ClientAliveInterval 60/' -i /etc/ssh/sshd_config
+
+
 # Passenger and Nginx
 RUN sed 's/www-data/app/' -i /etc/nginx/nginx.conf
 ADD nginx-passenger.conf /etc/nginx/conf.d/passenger.conf
