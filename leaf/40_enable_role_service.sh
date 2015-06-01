@@ -2,6 +2,8 @@
 
 if [[ $ROLE == *"passenger"* ]]; then
 	rm -f /etc/service/nginx/down
+	rm -f /etc/service/nginx-log-forwarder/down
+	mv /etc/logrotate.d/nginx.disabled /etc/logrotate.d/nginx
 fi
 
 if [[ $ROLE == *"sidekiq"* ]]; then
@@ -14,6 +16,5 @@ if [[ $ROLE == *"sftp"* ]]; then
 fi
 
 if [[ $ROLE == *"deploy"* ]]; then
-	mv /etc/logrotate.d/nginx.disabled /etc/logrotate.d/nginx
 	mv /etc/logrotate.d/app.disabled /etc/logrotate.d/app
 fi
