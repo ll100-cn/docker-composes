@@ -16,13 +16,18 @@ EXPOSE 22
 RUN apt-get install -y rsync
 RUN apt-get install -y ghostscript
 
-# Passenger
+# Timezone
+RUN echo Asia/Shanghai > /etc/timezone
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# Passenger and Nginx
 RUN sed 's/www-data/app/' -i /etc/nginx/nginx.conf
 ADD nginx-passenger.conf /etc/nginx/conf.d/passenger.conf
 RUN rm -f /etc/nginx/sites-available/default
 ADD nginx-site-default.conf /etc/nginx/sites-available/default
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled
 ADD logrotate-app.conf /etc/logrotate.d/app.disabled
+RUN touch /etc/service/nginx-log-forwarder/down
 
 # Sidekiq
 RUN apt-get install -y inotify-tools
@@ -39,10 +44,12 @@ ADD sidekiq-finish.sh /etc/service/sidekiq/finish
 RUN chmod +x /etc/service/sidekiq/finish
 
 
+# Role
 ADD 40_enable_role_service.sh /etc/my_init.d/40_enable_role_service.sh
 RUN chmod +x /etc/my_init.d/40_enable_role_service.sh
-
 RUN passwd -u app
 
+
+# Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
