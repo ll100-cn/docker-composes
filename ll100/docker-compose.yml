@@ -2,10 +2,11 @@ nginxproxy:
   image: jwilder/nginx-proxy:latest
   ports:
     - "80:80"
+    - "443:443"
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
     - ${LL100_DATA_DIR}/nginx-proxy/vhost.d:/etc/nginx/vhost.d
-
+    - ${LL100_DATA_DIR}/nginx-proxy/certs:/etc/nginx/certs
 
 
 nginx:
