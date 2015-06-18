@@ -16,5 +16,7 @@ if [[ $ROLE == *"sftp"* ]]; then
 fi
 
 if [[ $ROLE == *"deploy"* ]]; then
-	mv /etc/logrotate.d/app.disabled /etc/logrotate.d/app
+	[ -e /etc/logrotate.d/app.disabled ] && mv /etc/logrotate.d/app.disabled /etc/logrotate.d/app
 fi
+
+exit 0
