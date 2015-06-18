@@ -24,6 +24,9 @@ RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN sed 's/#ClientAliveInterval 0/ClientAliveInterval 60/' -i /etc/ssh/sshd_config
 
 
+# App
+RUN npm install -g bower
+
 # Passenger and Nginx
 RUN sed 's/www-data/app/' -i /etc/nginx/nginx.conf
 ADD nginx-passenger.conf /etc/nginx/conf.d/passenger.conf
