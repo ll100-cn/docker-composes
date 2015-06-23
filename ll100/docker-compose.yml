@@ -13,6 +13,6 @@ nginx:
   image: nginx:1.7.11
   restart: always
   volumes:
-    - ${LL100_DATA_DIR}/nginx/conf.d/ll100.conf:/etc/nginx/conf.d/ll100.conf
+    - nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
   environment:
-    - VIRTUAL_HOST=ll100.cn,ll100.net,*.ll100.net
+    - VIRTUAL_HOST=www.ll100.com,ll100.cn,*.ll100.cn,ll100.net,*.ll100.net

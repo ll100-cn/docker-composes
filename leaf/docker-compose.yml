@@ -42,7 +42,7 @@ passenger:
   links: [ mysql, redis ]
   restart: always
   environment:
-    - VIRTUAL_HOST=*.ll100.cn
+    - VIRTUAL_HOST=ll100.com,*.ll100.com
     - ROLE=passenger
   volumes:
     - ${LEAF_DATA_DIR}/web-app:/home/app
@@ -59,10 +59,3 @@ sftp:
   ports:
     - "4023:22"
 
-# phpmyadmin:
-#   image: splattael/phpmyadmin:latest
-#   restart: always
-#   links: [ mysql ]
-#   ports: [ "8080:80" ]
-#   environment:
-#     - VIRTUAL_HOST=dev.ll100.cn
