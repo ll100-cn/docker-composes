@@ -6,6 +6,12 @@ mysql:
     - mysql-charset.cnf:/etc/mysql/conf.d/charset.cnf
     - ${LEAF_DATA_DIR}/mysql:/var/lib/mysql
 
+postgres:
+  image: postgres:9.4.4
+  env_file: [ postgres_password.env ]
+  volumes:
+    - ${LEAF_DATA_DIR}/postgresql/data:/var/lib/postgresql/data
+
 redis:
   image: redis:2.8.19
   restart: always
@@ -18,7 +24,7 @@ app:
 
 deploy:
   image: leaf_app:latest
-  links: [ mysql, redis ]
+  links: [ mysql, postgres, redis ]
   restart: always
   environment:
     - ROLE=deploy
@@ -30,7 +36,7 @@ deploy:
 
 sidekiq:
   image: leaf_app:latest
-  links: [ mysql, redis ]
+  links: [ mysql, postgres, redis ]
   restart: always
   environment:
     - ROLE=sidekiq
@@ -39,7 +45,7 @@ sidekiq:
 
 passenger:
   image: leaf_app:latest
-  links: [ mysql, redis ]
+  links: [ mysql, postgres, redis ]
   restart: always
   environment:
     - VIRTUAL_HOST=ll100.com,*.ll100.com

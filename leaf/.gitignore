@@ -1,2 +1,3 @@
 /mysql_password.env
 /sftp.env
+/postgres_password.env
