@@ -1,0 +1,21 @@
+--- nginx.tmpl.orig	2015-07-13 14:04:20.431776547 +0800
++++ nginx.tmpl	2015-07-13 14:05:03.272448726 +0800
+@@ -90,7 +90,17 @@
+ 
+ server {
+ 	server_name {{ $host }};
+-	return 301 https://$host$request_uri;
++        {{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
++        include {{ printf "/etc/nginx/vhost.d/%s" $host }};
++        {{ end }}
++
++        location / {
++                proxy_pass {{ $proto }}://{{ $host }};
++                {{ if (exists (printf "/etc/nginx/htpasswd/%s" $host)) }}
++                auth_basic      "Restricted {{ $host }}";
++                auth_basic_user_file    {{ (printf "/etc/nginx/htpasswd/%s" $host) }};
++                {{ end }}
++        }
+ }
+ 
+ server {
