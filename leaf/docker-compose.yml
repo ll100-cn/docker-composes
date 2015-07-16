@@ -48,7 +48,7 @@ passenger:
   links: [ mysql, postgres, redis ]
   restart: always
   environment:
-    - VIRTUAL_HOST=ll100.com,*.ll100.com
+    - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
     - ROLE=passenger
   volumes:
     - ${LEAF_DATA_DIR}/web-app:/home/app
