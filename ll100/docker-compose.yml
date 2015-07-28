@@ -5,8 +5,8 @@ nginxproxy:
     - "443:443"
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
-    - ${LL100_DATA_DIR}/nginx-proxy/vhost.d:/etc/nginx/vhost.d
-    - ${LL100_DATA_DIR}/nginx-proxy/certs:/etc/nginx/certs
+    - ${LL100_DATA_DIR}/ll100/nginx-proxy/vhost.d:/etc/nginx/vhost.d
+    - ${LL100_DATA_DIR}/ll100/nginx-proxy/certs:/etc/nginx/certs
 
 
 nginx:
