@@ -1,0 +1,54 @@
+postgres:
+  image: postgres:9.4.4
+  env_file: [ postgres_password.env ]
+  volumes:
+    - ${LL100_DATA_DIR}/web/postgres/data:/var/lib/postgresql/data
+
+redis:
+  image: redis:2.8.19
+  restart: always
+  volumes:
+    - ${LL100_DATA_DIR}/web/redis:/data
+
+deploy:
+  image: leaf_app:latest
+  links: [ postgres, redis ]
+  restart: always
+  environment:
+    - ROLE=deploy
+  volumes:
+    - ${LL100_DATA_DIR}/web/leaf:/home/app
+  ports:
+    - "4022:22"
+
+sidekiq:
+  image: leaf_app:latest
+  links: [ postgres, redis ]
+  restart: always
+  environment:
+    - ROLE=sidekiq
+  volumes:
+    - ${LL100_DATA_DIR}/web/leaf:/home/app
+
+passenger:
+  image: leaf_app:latest
+  links: [ postgres, redis ]
+  restart: always
+  environment:
+    - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
+    - ROLE=passenger
+  volumes:
+    - ${LL100_DATA_DIR}/web/leaf:/home/app
+    - ${LL100_DATA_DIR}/web/log/nginx:/var/log/nginx
+
+sftp:
+  image: leaf_app:latest
+  restart: always
+  env_file: [ sftp.env ]
+  environment:
+    - ROLE=sftp
+  volumes:
+    - ${LL100_DATA_DIR}/web/leaf/shared/import:/home/app/shared/import
+  ports:
+    - "4023:22"
+
