@@ -15,6 +15,7 @@ EXPOSE 22
 
 RUN apt-get install -y rsync
 RUN apt-get install -y ghostscript
+RUN apt-get install -y libav-tools
 
 # Timezone
 RUN echo Asia/Shanghai > /etc/timezone
