@@ -4,7 +4,7 @@
 # a list of version numbers.
 FROM phusion/passenger-customizable:0.9.15
 
-RUN apt-get update # 20150518
+RUN apt-get update # 20150821
 RUN /pd_build/utilities.sh
 RUN /pd_build/ruby2.2.sh
 
