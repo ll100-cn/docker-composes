@@ -4,13 +4,14 @@ wordpress:
   links:
     - mariadb:mysql
   environment:
-    - VIRTUAL_HOST=blog.ll100.com
+    - VIRTUAL_HOST=blog.ll100.com,statics.blog.ll100cdn.com
+    - CERT_NAME=blog.ll100.com
   volumes:
-    - ${LEAF_DATA_DIR}/blog/wordpress:/var/www/html
+    - ${LL100_DATA_DIR}/blog/wordpress:/var/www/html
 
 mariadb:
   image: mariadb:10.0.20
   restart: always
   env_file: [ mysql_password.env ]
   volumes:
-    - ${LEAF_DATA_DIR}/blog/mysql:/var/lib/mysql
+    - ${LL100_DATA_DIR}/blog/mysql:/var/lib/mysql
