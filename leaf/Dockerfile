@@ -4,6 +4,10 @@
 # a list of version numbers.
 FROM phusion/passenger-customizable:0.9.15
 
+# use nodejs 4.x
+RUN rm -f /etc/apt/sources.list.d/nodejs.list
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+
 RUN apt-get update # 20150821
 RUN /pd_build/utilities.sh
 RUN /pd_build/ruby2.2.sh
@@ -24,9 +28,6 @@ RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # SSH
 RUN sed 's/#ClientAliveInterval 0/ClientAliveInterval 60/' -i /etc/ssh/sshd_config
 
-
-# App
-RUN npm install -g bower
 
 # Passenger and Nginx
 RUN sed 's/www-data/app/' -i /etc/nginx/nginx.conf
