@@ -15,6 +15,8 @@ RUN apt-get install -y ghostscript
 RUN apt-get install -y libav-tools
 
 # Passenger and Nginx
+RUN rm -f /etc/nginx/sites-available/default
+ADD nginx-site-default.conf /etc/nginx/sites-available/default
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled
 RUN mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled
 RUN touch /etc/service/nginx/down
@@ -41,4 +43,3 @@ RUN passwd -u app
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
