@@ -37,6 +37,7 @@ passenger:
   restart: always
   environment:
     - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
+    - HTTPS_METHOD=noredirect
     - ROLE=passenger
   volumes:
     - ${LL100_DATA_DIR}/web/leaf:/home/app
