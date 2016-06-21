@@ -17,4 +17,4 @@ nginx:
     - ./nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
     - ${LL100_DATA_DIR}/ll100/nginx/html:/usr/share/nginx/html
   environment:
-    - VIRTUAL_HOST=www.ll100.com,support.ll100.com
+    - VIRTUAL_HOST=www.ll100.com,support.ll100.com,dev.ll100.com
