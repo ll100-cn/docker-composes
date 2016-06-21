@@ -1,5 +1,5 @@
 nginxproxy:
-  image: jwilder/nginx-proxy:0.4.0
+  image: jwilder/nginx-proxy:latest
   restart: always
   ports:
     - "80:80"
