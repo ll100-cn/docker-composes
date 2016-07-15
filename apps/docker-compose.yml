@@ -3,6 +3,7 @@ nginx:
   restart: always
   environment:
     - VIRTUAL_HOST=apps.ll100.com
+    - HTTPS_METHOD=noredirect
     - ROLE=nginx
   volumes:
     - ${LL100_DATA_DIR}/apps/nginx/html:/usr/share/nginx/html
