@@ -8,6 +8,7 @@ wordpress:
     - CERT_NAME=blog.ll100.com
   volumes:
     - ${LL100_DATA_DIR}/blog/wordpress:/var/www/html
+    - ./php.ini:/usr/local/etc/php/php.ini
 
 mariadb:
   image: mariadb:10.0.20
