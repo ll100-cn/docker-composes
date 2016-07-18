@@ -6,15 +6,14 @@ nginxproxy:
     - "443:443"
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock
-    - ${LL100_DATA_DIR}/ll100/nginx-proxy/vhost.d:/etc/nginx/vhost.d
-    - ${LL100_DATA_DIR}/ll100/nginx-proxy/certs:/etc/nginx/certs
-
+    - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/vhost.d:/etc/nginx/vhost.d
+    - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/certs:/etc/nginx/certs
 
 nginx:
-  image: nginx:1.9.6
+  image: nginx:1.11.1
   restart: always
   volumes:
     - ./nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
-    - ${LL100_DATA_DIR}/ll100/nginx/html:/usr/share/nginx/html
+    - ${LL100_SHARED_DATA_DIR}/portal/nginx/html:/usr/share/nginx/html
   environment:
     - VIRTUAL_HOST=www.ll100.com,support.ll100.com,dev.ll100.com

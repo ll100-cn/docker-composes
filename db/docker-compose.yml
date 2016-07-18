@@ -1,0 +1,16 @@
+postgres:
+  image: postgres:9.4.8
+  restart: always
+  env_file: [ postgres_password.env ]
+  volumes:
+    - ${LL100_DATA_DIR}/db/postgres/data:/var/lib/postgresql/data
+  ports:
+    - "5432:5432"
+
+redis:
+  image: redis:3.0.7
+  restart: always
+  volumes:
+    - ${LL100_DATA_DIR}/db/redis:/data
+  ports:
+    - "6379:6379"

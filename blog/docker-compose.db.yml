@@ -1,0 +1,8 @@
+mariadb:
+  image: mariadb:10.0.26
+  restart: always
+  env_file: [ mysql_password.env ]
+  volumes:
+    - ${LL100_DATA_DIR}/blog/mysql:/var/lib/mysql
+  ports:
+    - "3306:3306"

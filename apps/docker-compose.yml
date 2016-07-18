@@ -6,4 +6,4 @@ nginx:
     - HTTPS_METHOD=noredirect
     - ROLE=nginx
   volumes:
-    - ${LL100_DATA_DIR}/apps/nginx/html:/usr/share/nginx/html
+    - ${LL100_SHARED_DATA_DIR}/apps/nginx/html:/usr/share/nginx/html
