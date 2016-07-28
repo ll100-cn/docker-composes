@@ -17,6 +17,7 @@ RUN apt-get install -y libav-tools
 # Passenger and Nginx
 RUN rm -f /etc/nginx/sites-available/default
 ADD nginx-site-default.conf /etc/nginx/sites-available/default
+COPY logrotate-app.conf /etc/logrotate.d/app
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled
 RUN mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled
 RUN touch /etc/service/nginx/down
