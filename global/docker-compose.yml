@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:latest
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/well-known:/usr/share/nginx/html/.well-known
+      - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/vhost.d:/etc/nginx/vhost.d
+      - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/certs:/etc/nginx/certs
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true

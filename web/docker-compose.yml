@@ -1,41 +1,50 @@
-deploy:
-  extends:
-    file: leaf.yml
-    service: latest
-  restart: always
-  environment:
-    - ROLE=deploy
-  ports:
-    - "4022:22"
+version: '2'
 
-sidekiq:
-  extends:
-    file: leaf.yml
-    service: latest
-  restart: always
-  environment:
-    - ROLE=sidekiq
+services:
+  deploy:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: always
+    environment:
+      - ROLE=deploy
+    ports:
+      - "4022:22"
 
-passenger:
-  extends:
-    file: leaf.yml
-    service: latest
-  restart: always
-  environment:
-    - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
-    - HTTPS_METHOD=noredirect
-    - ROLE=passenger
-  volumes:
-    - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
+  sidekiq:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: always
+    environment:
+      - ROLE=sidekiq
 
-# sftp:
-#   image: leaf_app:latest
-#   restart: always
-#   env_file: [ sftp.env ]
-#   environment:
-#     - ROLE=sftp
-#   volumes:
-#     - ${LL100_DATA_DIR}/web/leaf/shared/import:/home/app/shared/import
-#   ports:
-#     - "4023:22"
-# 
+  passenger:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: always
+    environment:
+      - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
+      - HTTPS_METHOD=noredirect
+      - ROLE=passenger
+    volumes:
+      - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
+    networks:
+      - nginx-proxy
+
+  # sftp:
+  #   image: leaf_app:latest
+  #   restart: always
+  #   env_file: [ sftp.env ]
+  #   environment:
+  #     - ROLE=sftp
+  #   volumes:
+  #     - ${LL100_DATA_DIR}/web/leaf/shared/import:/home/app/shared/import
+  #   ports:
+  #     - "4023:22"
+  # 
+
+networks:
+  nginx-proxy:
+    external: true

@@ -1,12 +1,21 @@
-wordpress:
-  image: wordpress:4.2.3
-  restart: always
-  env_file:
-    - mysql_password.env
-    - wordpress.env
-  environment:
-    - VIRTUAL_HOST=blog.ll100.com,statics.blog.ll100cdn.com
-    - CERT_NAME=blog.ll100.com
-  volumes:
-    - ${LL100_SHARED_DATA_DIR}/blog/wordpress:/var/www/html
-    - ./php.ini:/usr/local/etc/php/php.ini
+version: '2'
+
+services:
+  wordpress:
+    image: wordpress:4.2.3
+    restart: always
+    env_file:
+      - mysql_password.env
+      - wordpress.env
+    environment:
+      - VIRTUAL_HOST=blog.ll100.com,statics.blog.ll100cdn.com
+      - CERT_NAME=blog.ll100.com
+    volumes:
+      - ${LL100_SHARED_DATA_DIR}/blog/wordpress:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true

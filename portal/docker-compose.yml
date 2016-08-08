@@ -1,20 +1,17 @@
-nginxproxy:
-  image: jwilder/nginx-proxy:latest
-  restart: always
-  ports:
-    - "80:80"
-    - "443:443"
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock
-    - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/well-known:/usr/share/nginx/html/.well-known
-    - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/vhost.d:/etc/nginx/vhost.d
-    - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/certs:/etc/nginx/certs
+version: '2'
 
-nginx:
-  image: nginx:1.11.1
-  restart: always
-  volumes:
-    - ./nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
-    - ${LL100_SHARED_DATA_DIR}/portal/nginx/html:/usr/share/nginx/html
-  environment:
-    - VIRTUAL_HOST=www.ll100.com,support.ll100.com,dev.ll100.com
+services:
+  nginx:
+    image: nginx:1.11.1
+    restart: unless-stopped
+    volumes:
+      - ./nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
+      - ${LL100_SHARED_DATA_DIR}/portal/nginx/html:/usr/share/nginx/html
+    environment:
+      - VIRTUAL_HOST=www.ll100.com,support.ll100.com,dev.ll100.com
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
