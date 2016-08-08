@@ -1,11 +1,6 @@
-FROM sunteya/passenger:20160118-ruby22
+FROM sunteya/passenger:20160808-ruby23
 
-# use nodejs 4.x
-RUN rm -f /etc/apt/sources.list.d/nodejs.list
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
-RUN apt-get install -y nodejs
-
-RUN apt-get update # 20160118
+RUN apt-get update # 20160808
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
@@ -17,7 +12,6 @@ RUN apt-get install -y libav-tools
 # Passenger and Nginx
 RUN rm -f /etc/nginx/sites-available/default
 ADD nginx-site-default.conf /etc/nginx/sites-available/default
-COPY logrotate-app.conf /etc/logrotate.d/app
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled
 RUN mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled
 RUN touch /etc/service/nginx/down
