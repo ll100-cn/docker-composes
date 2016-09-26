@@ -12,6 +12,17 @@ services:
     networks:
       - nginx-proxy
 
+  ll100cn:
+    image: nginx:1.11.1
+    restart: unless-stopped
+    volumes:
+      - ./ll100cn-nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ll100cn-index.html:/usr/share/nginx/html/index.html
+    environment:
+      - VIRTUAL_HOST=www.ll100.cn,ll100.cn,www.ll100.net,ll100.net
+    networks:
+      - nginx-proxy
+
 networks:
   nginx-proxy:
     external: true
