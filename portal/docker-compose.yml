@@ -9,6 +9,7 @@ services:
       - ${LL100_SHARED_DATA_DIR}/portal/nginx/html:/usr/share/nginx/html
     environment:
       - VIRTUAL_HOST=www.ll100.com,support.ll100.com,dev.ll100.com
+      - HTTPS_METHOD=noredirect
     networks:
       - nginx-proxy
 
