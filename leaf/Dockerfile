@@ -1,6 +1,6 @@
-FROM sunteya/passenger:20161206-ruby23
+FROM sunteya/passenger:20170117-ruby23
 
-RUN apt-get update # 20161206
+RUN apt-get update # 20170125
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
