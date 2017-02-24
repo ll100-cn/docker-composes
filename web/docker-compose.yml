@@ -33,8 +33,8 @@ services:
       file: leaf.yml
       service: latest
     restart: unless-stopped
+    env_file: ./host.env
     environment:
-      - VIRTUAL_HOST=ll100.com,*.ll100.com,*.ll100cdn.com
       - HTTPS_METHOD=noredirect
       - ROLE=passenger
     volumes:
