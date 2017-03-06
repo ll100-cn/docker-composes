@@ -10,6 +10,7 @@ services:
     environment:
       - VIRTUAL_HOST=blog.ll100.com,statics.blog.ll100cdn.com
       - CERT_NAME=blog.ll100.com
+      - HTTPS_METHOD=noredirect
     volumes:
       - ${LL100_SHARED_DATA_DIR}/blog/wordpress:/var/www/html
       - ./php.ini:/usr/local/etc/php/php.ini

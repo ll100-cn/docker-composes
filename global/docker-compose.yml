@@ -9,7 +9,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
+      - /var/run/docker.sock:/tmp/docker.sock:ro
       - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/nginx-html:/usr/share/nginx/html:ro
       - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/vhost.d:/etc/nginx/vhost.d:ro
       - ${LL100_SHARED_DATA_DIR}/portal/nginx-proxy/certs:/etc/nginx/certs:ro

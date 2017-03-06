@@ -57,6 +57,14 @@ services:
   #     - "4023:22"
   #
 
+  # letsencrypt-cdn:
+  #   image: busybox
+  #   restart: unless-stopped
+  #   environment:
+  #     - LETSENCRYPT_HOST=statics.ll100cdn.com
+  #     - LETSENCRYPT_EMAIL=admin@ll100.com
+  #   command: sh -c "while [ true ]; do sleep 10; done"
+
 networks:
   nginx-proxy:
     external: true
