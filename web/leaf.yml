@@ -2,7 +2,7 @@ version: '2'
 services:
   latest:
     image: leaf_app:latest
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
       - ${LL100_SHARED_DATA_DIR}/leaf/shared:/home/app/shared

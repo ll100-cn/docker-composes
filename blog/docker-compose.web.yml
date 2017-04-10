@@ -3,7 +3,7 @@ version: '2'
 services:
   wordpress:
     image: wordpress:4.2.3
-    restart: always
+    restart: unless-stopped
     env_file:
       - mysql_password.env
       - wordpress.env
