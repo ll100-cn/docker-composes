@@ -13,6 +13,7 @@ services:
     restart: unless-stopped
     environment:
       - ROLE=deploy
+      - APP_CURRENT_PATH=/home/app/www/frontend/current
     ports:
       - "4022:22"
     links:
@@ -25,6 +26,7 @@ services:
     restart: unless-stopped
     environment:
       - ROLE=sidekiq
+      - APP_CURRENT_PATH=/home/app/www/frontend/current
     links:
       - memcached:memcached
 
@@ -35,6 +37,7 @@ services:
     restart: unless-stopped
     env_file: ./host.env
     environment:
+      - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - ROLE=passenger
     volumes:
@@ -44,18 +47,6 @@ services:
     networks:
       - default
       - nginx-proxy
-
-  # sftp:
-  #   image: leaf_app:latest
-  #   restart: unless-stopped
-  #   env_file: [ sftp.env ]
-  #   environment:
-  #     - ROLE=sftp
-  #   volumes:
-  #     - ${LL100_DATA_DIR}/web/leaf/shared/import:/home/app/shared/import
-  #   ports:
-  #     - "4023:22"
-  #
 
   # letsencrypt-cdn:
   #   image: busybox
