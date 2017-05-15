@@ -13,7 +13,6 @@ services:
     restart: unless-stopped
     environment:
       - ROLE=deploy
-      - APP_CURRENT_PATH=/home/app/www/frontend/current
     ports:
       - "4022:22"
     links:
@@ -30,14 +29,32 @@ services:
     links:
       - memcached:memcached
 
-  passenger:
+  frontend:
     extends:
       file: leaf.yml
       service: latest
     restart: unless-stopped
-    env_file: ./host.env
+    env_file: ./frontend-host.env
     environment:
       - APP_CURRENT_PATH=/home/app/www/frontend/current
+      - HTTPS_METHOD=noredirect
+      - ROLE=passenger
+    volumes:
+      - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
+    links:
+      - memcached:memcached
+    networks:
+      - default
+      - nginx-proxy
+
+  backend:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: unless-stopped
+    env_file: ./backend-host.env
+    environment:
+      - APP_CURRENT_PATH=/home/app/www/backend/current
       - HTTPS_METHOD=noredirect
       - ROLE=passenger
     volumes:

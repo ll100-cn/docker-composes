@@ -1,2 +1,4 @@
 /sftp.env
 /host.env
+/frontend-host.env
+/backend-host.env
