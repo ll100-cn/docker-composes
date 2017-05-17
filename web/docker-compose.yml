@@ -18,7 +18,7 @@ services:
     links:
       - memcached:memcached
 
-  sidekiq:
+  f_sidekiq:
     extends:
       file: leaf.yml
       service: latest
@@ -29,7 +29,18 @@ services:
     links:
       - memcached:memcached
 
-  frontend:
+  b_sidekiq:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: unless-stopped
+    environment:
+      - ROLE=sidekiq
+      - APP_CURRENT_PATH=/home/app/www/backend/current
+    links:
+      - memcached:memcached
+
+  f_passenger:
     extends:
       file: leaf.yml
       service: latest
@@ -47,7 +58,7 @@ services:
       - default
       - nginx-proxy
 
-  backend:
+  b_passenger:
     extends:
       file: leaf.yml
       service: latest
