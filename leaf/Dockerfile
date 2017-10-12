@@ -8,6 +8,7 @@ RUN apt update # 20170510
 RUN apt install -y ghostscript libav-tools
 
 # Passenger and Nginx
+COPY nginx-passenger.conf /etc/nginx/conf.d/passenger.conf
 COPY nginx-site-default.conf /etc/nginx/sites-available/default
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled \
  && mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled \
