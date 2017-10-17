@@ -1,10 +1,11 @@
-FROM sunteya/passenger:20170510-ruby23
+FROM sunteya/passenger:20171017-ruby24
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # App
-RUN apt update # 20170510
+#RUN npm install -g yarn
+RUN apt update # 20171017
 RUN apt install -y ghostscript libav-tools
 
 # Passenger and Nginx
