@@ -50,7 +50,6 @@ services:
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - ROLE=passenger
-      - WEB_CONCURRENCY=2
       - RAILS_MAX_THREADS=20
     volumes:
       - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
