@@ -1,11 +1,10 @@
-FROM sunteya/puma:20171206-ruby24
+FROM sunteya/puma:20180517-ruby24
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # App
-#RUN npm install -g yarn
-RUN apt update # 20171228
+RUN apt update # 20180517
 RUN apt install -y ghostscript libav-tools
 RUN apt install -y libxtst6 libnss3 libxss1 libgconf-2-4 libatk1.0 libxtst6 libgtk-3-0 libatk-bridge2.0-dev
 RUN apt install -y fonts-noto-cjk
