@@ -11,6 +11,7 @@ RUN apt install -y fonts-noto-cjk
 
 # Passenger and Nginx
 COPY nginx-site-default.conf /etc/nginx/sites-available/default
+RUN echo "" > /etc/nginx/passenger.conf
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled \
  && mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled \
  && touch /etc/service/nginx/down \
