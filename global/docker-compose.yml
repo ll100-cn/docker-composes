@@ -2,7 +2,9 @@ version: '3'
 
 services:
   nginx-proxy:
-    image: jwilder/nginx-proxy:latest
+    build:
+      context: ./nginx-proxy-src
+      dockerfile: Dockerfile.alpine
     container_name: nginx-proxy
     restart: unless-stopped
     ports:
