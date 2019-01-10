@@ -22,8 +22,9 @@ services:
       file: leaf.yml
       service: latest
     environment:
-      - ../leaf/40_enable_sidekiq.sh:/etc/my_init.d/40_enable_sidekiq.sh
       - APP_CURRENT_PATH=/home/app/www/backend/current
+    volumes:
+      - ../leaf/40_enable_sidekiq.sh:/etc/my_init.d/40_enable_sidekiq.sh
     links:
       - memcached:memcached
 
