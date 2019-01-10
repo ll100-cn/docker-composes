@@ -1,4 +1,3 @@
-/sftp.env
-/host.env
 /frontend-host.env
 /backend-host.env
+/teacher-host.env

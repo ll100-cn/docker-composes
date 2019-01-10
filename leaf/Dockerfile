@@ -16,10 +16,10 @@ RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled \
  && mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled \
  && touch /etc/service/nginx/down \
  && touch /etc/service/nginx-log-forwarder/down \
- && touch /etc/service/puma/down
+ && touch /etc/service/puma/down \
+ && touch /etc/service/puma/log/down
 
-# Role
-COPY 40_enable_role_service.sh /etc/my_init.d/
+# Allow app can login for SSH
 RUN passwd -u app
 
 # Cleanup

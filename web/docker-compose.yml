@@ -10,81 +10,73 @@ services:
     extends:
       file: leaf.yml
       service: latest
-    restart: unless-stopped
-    environment:
-      - ROLE=deploy
+    volumes:
+      - ../leaf/40_enable_deploy.sh:/etc/my_init.d/40_enable_deploy.sh
     ports:
       - "4022:22"
     links:
       - memcached:memcached
 
-  f_sidekiq:
+  sidekiq:
     extends:
       file: leaf.yml
       service: latest
-    restart: unless-stopped
     environment:
-      - ROLE=sidekiq
-      - APP_CURRENT_PATH=/home/app/www/frontend/current
-    links:
-      - memcached:memcached
-
-  b_sidekiq:
-    extends:
-      file: leaf.yml
-      service: latest
-    restart: unless-stopped
-    environment:
-      - ROLE=sidekiq
+      - ../leaf/40_enable_sidekiq.sh:/etc/my_init.d/40_enable_sidekiq.sh
       - APP_CURRENT_PATH=/home/app/www/backend/current
     links:
       - memcached:memcached
 
-  f_passenger:
+  frontend:
     extends:
       file: leaf.yml
       service: latest
-    restart: unless-stopped
     env_file: ./frontend-host.env
     environment:
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
-      - ROLE=passenger
       - RAILS_MAX_THREADS=20
+      - VIRTUAL_PATH=/
     volumes:
-      - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
+      - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
+      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/frontend/nginx:/var/log/nginx
     links:
       - memcached:memcached
     networks:
       - default
       - nginx-proxy
 
-  b_passenger:
+  backend:
     extends:
       file: leaf.yml
       service: latest
-    restart: unless-stopped
     env_file: ./backend-host.env
     environment:
       - APP_CURRENT_PATH=/home/app/www/backend/current
       - HTTPS_METHOD=noredirect
-      - ROLE=passenger
       - WEB_CONCURRENCY=2
     volumes:
-      - ${LL100_LOCAL_DATA_DIR}/leaf/log/nginx:/var/log/nginx
+      - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
+      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/backend/nginx:/var/log/nginx
     links:
       - memcached:memcached
     networks:
       - default
       - nginx-proxy
 
-  # letsencrypt-cdn:
-  #   image: busybox
-  #   restart: unless-stopped
-  #   environment:
-  #     - LETSENCRYPT_HOST=statics.ll100cdn.com
-  #     - LETSENCRYPT_EMAIL=admin@ll100.com
-  #   command: sh -c "while [ true ]; do sleep 10; done"
+  teacher:
+    image: nginx:1.14.1
+    restart: unless-stopped
+    env_file: ./teacher-host.env
+    environment:
+      - VIRTUAL_PATH=/tb
+    volumes:
+      - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
+      - ${LL100_LOCAL_DATA_DIR}/leaf/html/teacher:/usr/share/nginx/html
+      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/tewacher/nginx:/var/log/nginx
+    networks:
+      - default
+      - nginx-proxy
 
 networks:
   nginx-proxy:
