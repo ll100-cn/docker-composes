@@ -40,7 +40,6 @@ services:
       - VIRTUAL_PATH=/
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
-      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/frontend/nginx:/var/log/nginx
     links:
       - memcached:memcached
     networks:
@@ -58,7 +57,22 @@ services:
       - WEB_CONCURRENCY=2
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
-      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/backend/nginx:/var/log/nginx
+    links:
+      - memcached:memcached
+    networks:
+      - default
+      - nginx-proxy
+
+  school:
+    extends:
+      file: leaf.yml
+      service: latest
+    env_file: ./school-host.env
+    environment:
+      - APP_CURRENT_PATH=/home/app/www/school/current
+      - WEB_CONCURRENCY=2
+    volumes:
+      - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
       - memcached:memcached
     networks:
@@ -74,7 +88,6 @@ services:
     volumes:
       - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
       - ${LL100_LOCAL_DATA_DIR}/leaf/html/teacher:/usr/share/nginx/html
-      # - ${LL100_LOCAL_DATA_DIR}/leaf/log/tewacher/nginx:/var/log/nginx
     networks:
       - default
       - nginx-proxy
