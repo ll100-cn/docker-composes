@@ -37,7 +37,24 @@ services:
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
-      - VIRTUAL_PATH=/
+      - VIRTUAL_PATH=/,/auth
+    volumes:
+      - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
+    links:
+      - memcached:memcached
+    networks:
+      - default
+      - nginx-proxy
+
+  wechat:
+    extends:
+      file: leaf.yml
+      service: latest
+    env_file: ./wechat-host.env
+    environment:
+      - APP_CURRENT_PATH=/home/app/www/wechat/current
+      - HTTPS_METHOD=noredirect
+      - RAILS_MAX_THREADS=20
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
@@ -70,7 +87,6 @@ services:
     env_file: ./school-host.env
     environment:
       - APP_CURRENT_PATH=/home/app/www/school/current
-      - HTTPS_METHOD=noredirect
       - WEB_CONCURRENCY=2
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
@@ -81,14 +97,17 @@ services:
       - nginx-proxy
 
   teacher:
-    image: nginx:1.14.1
+    extends:
+      file: leaf.yml
+      service: latest
     restart: unless-stopped
     env_file: ./teacher-host.env
-    environment:
-      - VIRTUAL_PATH=/tb
     volumes:
-      - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
-      - ${LL100_LOCAL_DATA_DIR}/leaf/html/teacher:/usr/share/nginx/html
+      - ./teacher-nginx.conf:/etc/nginx/sites-enabled/default
+      - ../leaf/40_enable_passenger.sh:/etc/my_init.d/40_enable_passenger.sh
+    environment:
+      - APP_CURRENT_PATH=/home/app/www/teacher/current
+      - VIRTUAL_PATH=/tb
     networks:
       - default
       - nginx-proxy
