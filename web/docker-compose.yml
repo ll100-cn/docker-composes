@@ -70,6 +70,7 @@ services:
     env_file: ./school-host.env
     environment:
       - APP_CURRENT_PATH=/home/app/www/school/current
+      - HTTPS_METHOD=noredirect
       - WEB_CONCURRENCY=2
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
