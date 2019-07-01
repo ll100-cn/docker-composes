@@ -9,6 +9,7 @@ RUN apt install -y ghostscript ffmpeg
 RUN apt install -y libxtst6 libnss3 libxss1 libgconf-2-4 libatk1.0 libxtst6 libgtk-3-0 libatk-bridge2.0-dev
 RUN apt install -y fonts-noto-cjk
 COPY policy.xml /etc/ImageMagick-6/policy.xml
+RUN apt install -y link-grammar liblink-grammar-dev
 
 # Passenger and Nginx
 COPY nginx-site-default.conf /etc/nginx/sites-available/default
