@@ -34,6 +34,7 @@ services:
       service: latest
     env_file: ./frontend-host.env
     environment:
+      - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
@@ -52,6 +53,7 @@ services:
       service: latest
     env_file: ./wechat-host.env
     environment:
+      - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/wechat/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
@@ -69,6 +71,7 @@ services:
       service: latest
     env_file: ./backend-host.env
     environment:
+      - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/backend/current
       - HTTPS_METHOD=noredirect
       - WEB_CONCURRENCY=2
@@ -86,6 +89,7 @@ services:
       service: latest
     env_file: ./school-host.env
     environment:
+      - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/school/current
       - WEB_CONCURRENCY=2
     volumes:
