@@ -2,7 +2,7 @@ version: '2'
 
 services:
   postgres:
-    image: postgres:9.4.8
+    image: postgres:12.1
     restart: unless-stopped
     env_file: [ postgres_password.env ]
     volumes:
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
 
   redis:
-    image: redis:3.0.7
+    image: redis:5.0.7
     restart: unless-stopped
     volumes:
       - ${LL100_DATA_DIR}/db/redis:/data
