@@ -1,10 +1,10 @@
-FROM sunteya/puma:20200119-ruby26
+FROM sunteya/puma:20200211-ruby26
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # App
-RUN apt update # 20200119
+RUN apt update # 20200211
 RUN apt install -y ghostscript ffmpeg
 RUN apt install -y libxtst6 libnss3 libxss1 libgconf-2-4 libatk1.0 libxtst6 libgtk-3-0 libatk-bridge2.0-dev
 RUN apt install -y fonts-noto-cjk
