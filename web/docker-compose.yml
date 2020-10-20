@@ -116,6 +116,22 @@ services:
       - default
       - nginx-proxy
 
+  student:
+    extends:
+      file: leaf.yml
+      service: latest
+    restart: unless-stopped
+    env_file: ./student-host.env
+    volumes:
+      - ./student-nginx.conf:/etc/nginx/sites-enabled/default
+      - ../leaf/40_enable_passenger.sh:/etc/my_init.d/40_enable_passenger.sh
+    environment:
+      - APP_CURRENT_PATH=/home/app/www/student/current
+      - VIRTUAL_PATH=/sb
+    networks:
+      - default
+      - nginx-proxy
+
 networks:
   nginx-proxy:
     external: true
