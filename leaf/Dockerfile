@@ -1,10 +1,10 @@
-FROM sunteya/puma:20200211.1-ruby26
+FROM sunteya/puma:20200211.2-ruby26
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # App
-RUN apt update # 20201129
+RUN apt update # 2020-12-03
 RUN apt install -y yasm
 RUN apt install -y wget curl
 RUN apt remove -y imagemagick
