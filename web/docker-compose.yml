@@ -38,6 +38,7 @@ services:
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
+      - WEB_CONCURRENCY=6
       - VIRTUAL_PATH=/,/auth
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
