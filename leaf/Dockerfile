@@ -17,6 +17,7 @@ COPY policy.xml /etc/ImageMagick-6/policy.xml
 RUN apt install -y link-grammar liblink-grammar-dev
 RUN apt install -y libvips
 RUN apt install -y unzip
+RUN apt install -y mediainfo
 
 # Passenger and Nginx
 COPY nginx-site-default.conf /etc/nginx/sites-available/default
