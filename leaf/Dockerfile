@@ -17,7 +17,8 @@ COPY policy.xml /etc/ImageMagick-6/policy.xml
 RUN apt install -y link-grammar liblink-grammar-dev
 RUN apt install -y libvips
 RUN apt install -y unzip
-RUN apt install -y mediainfo
+RUN curl -L https://gist.github.com/Guoxweii/d5ed9a4b15344697b7568f2a9baa04e4/raw/3c2b15d74d798659019cae348504ec299e6d2003/install_mediainfo.sh | bash
+
 
 # Passenger and Nginx
 COPY nginx-site-default.conf /etc/nginx/sites-available/default
