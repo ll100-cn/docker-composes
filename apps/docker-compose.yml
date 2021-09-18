@@ -5,16 +5,16 @@ services:
     image: nginx:1.7.11
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=apps.ll100.com
-      - LETSENCRYPT_HOST=apps.ll100.com
-      - LETSENCRYPT_EMAIL=admin@ll100.com
-      - HTTPS_METHOD=noredirect
       - ROLE=nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apps-nginx-http.rule=Host(`apps.ll100.com`)"
+      - "traefik.http.services.apps-nginx.loadbalancer.server.port=80"
     volumes:
       - ${LL100_SHARED_DATA_DIR}/apps/nginx/html:/usr/share/nginx/html
     networks:
-      - nginx-proxy
+      - traefik
 
 networks:
-  nginx-proxy:
+  traefik:
     external: true

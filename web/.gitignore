@@ -1,6 +1,1 @@
-/frontend-host.env
-/backend-host.env
-/teacher-host.env
-/student-host.env
-/school-host.env
-/wechat-host.env
+/.env

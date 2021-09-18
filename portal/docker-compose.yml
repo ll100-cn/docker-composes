@@ -8,11 +8,12 @@ services:
       - ./nginx-ll100.conf:/etc/nginx/conf.d/ll100.conf
       - ${LL100_SHARED_DATA_DIR}/portal/nginx/html:/usr/share/nginx/html
     env_file: ./host.env
-    environment:
-      - VIRTUAL_HOST=www.ll100.com,dev.ll100.com,support.ll100.com
-      - HTTPS_METHOD=noredirect
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portal-nginx-http.rule=Host(`www.ll100.com`, `support.ll100.com`)"
+      - "traefik.http.services.portal-nginx.loadbalancer.server.port=80"
     networks:
-      - nginx-proxy
+      - traefik
 
   ll100cn:
     image: nginx:1.11.1
@@ -20,13 +21,13 @@ services:
     volumes:
       - ./ll100cn-nginx.conf:/etc/nginx/conf.d/default.conf
       - ./ll100cn-index.html:/usr/share/nginx/html/index.html
-    environment:
-      - VIRTUAL_HOST=www.ll100.cn,ll100.cn,www.ll100.net,ll100.net
-      - LETSENCRYPT_HOST=www.ll100.cn,ll100.cn,www.ll100.net,ll100.net
-      - LETSENCRYPT_EMAIL=admin@ll100.com
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portal-ll100cn-http.rule=Host(`www.ll100.cn`, `ll100.cn`, `www.ll100.net`, `ll100.net`)"
+      - "traefik.http.services.portal-ll100cn.loadbalancer.server.port=80"
     networks:
-      - nginx-proxy
+      - traefik
 
 networks:
-  nginx-proxy:
+  traefik:
     external: true

@@ -32,90 +32,104 @@ services:
     extends:
       file: leaf.yml
       service: latest
-    env_file: ./frontend-host.env
     environment:
       - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/frontend/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
       - WEB_CONCURRENCY=6
-      - VIRTUAL_PATH=/,/auth
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-frontend.rule=Host(`${BASE_DOMAIN}`,`api.${BASE_DOMAIN}`,`p3.${BASE_DOMAIN}`) && PathPrefix(`/`)"
+      - "traefik.http.routers.leaf-frontend.priority=1"
+      - "traefik.http.services.leaf-frontend.loadbalancer.server.port=80"
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
       - memcached:memcached
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
   wechat:
     extends:
       file: leaf.yml
       service: latest
-    env_file: ./wechat-host.env
     environment:
       - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/wechat/current
       - HTTPS_METHOD=noredirect
       - RAILS_MAX_THREADS=20
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-wechat.rule=Host(`wx.${BASE_DOMAIN}`)"
+      - "traefik.http.services.leaf-wechat.loadbalancer.server.port=80"
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
       - memcached:memcached
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
   backend:
     extends:
       file: leaf.yml
       service: latest
-    env_file: ./backend-host.env
     environment:
       - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/backend/current
       - HTTPS_METHOD=noredirect
       - WEB_CONCURRENCY=2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-backend.rule=Host(`backend.${BASE_DOMAIN}`, `register.${BASE_DOMAIN}`)"
+      - "traefik.http.services.leaf-backend.loadbalancer.server.port=80"
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
       - memcached:memcached
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
   school:
     extends:
       file: leaf.yml
       service: latest
-    env_file: ./school-host.env
     environment:
       - RAILS_SERVE_STATIC_FILES=yes
       - APP_CURRENT_PATH=/home/app/www/school/current
       - WEB_CONCURRENCY=2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-school.rule=Host(`school.${BASE_DOMAIN}`)"
+      - "traefik.http.services.leaf-school.loadbalancer.server.port=80"
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
     links:
       - memcached:memcached
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
   teacher:
     extends:
       file: leaf.yml
       service: latest
     restart: unless-stopped
-    env_file: ./teacher-host.env
     volumes:
       - ./teacher-nginx.conf:/etc/nginx/sites-enabled/default
       - ../leaf/40_enable_passenger.sh:/etc/my_init.d/40_enable_passenger.sh
     environment:
       - APP_CURRENT_PATH=/home/app/www/teacher/current
-      - VIRTUAL_PATH=/tb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-teacher.rule=Host(`${BASE_DOMAIN}`) && PathPrefix(`/tb`)"
+      - "traefik.http.services.leaf-teacher.loadbalancer.server.port=80"
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
   student:
     extends:
@@ -128,11 +142,14 @@ services:
       - ../leaf/40_enable_passenger.sh:/etc/my_init.d/40_enable_passenger.sh
     environment:
       - APP_CURRENT_PATH=/home/app/www/student/current
-      - VIRTUAL_PATH=/sb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-student.rule=Host(`${BASE_DOMAIN}`) && PathPrefix(`/sb`)"
+      - "traefik.http.services.leaf-student.loadbalancer.server.port=80"
     networks:
       - default
-      - nginx-proxy
+      - traefik
 
 networks:
-  nginx-proxy:
+  traefik:
     external: true

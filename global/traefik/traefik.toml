@@ -1,0 +1,30 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+  [entryPoints.traefik]
+    address = ":8888"
+
+[api]
+  insecure = true
+  dashboard = true
+
+[log]
+  level= "DEBUG"
+
+[certificatesResolvers.lets-encrypt.acme]
+  email = "admin@ll100.com"
+  storage = "acme.json"
+  [certificatesResolvers.lets-encrypt.acme.tlsChallenge]
+
+[providers.docker]
+  watch = true
+  exposedByDefault=false
+  network = "traefik"
+
+[providers.file]
+  watch = true
+  directory="/providers"
