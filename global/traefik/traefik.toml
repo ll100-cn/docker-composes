@@ -1,9 +1,13 @@
 [entryPoints]
   [entryPoints.web]
     address = ":80"
+    [entryPoints.web.forwardedHeaders]
+      insecure = true
 
   [entryPoints.websecure]
     address = ":443"
+    [entryPoints.websecure.forwardedHeaders]
+      insecure = true
 
   [entryPoints.traefik]
     address = ":8888"
