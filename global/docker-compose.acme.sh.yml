@@ -6,6 +6,7 @@ services:
     volumes:
       - ${LL100_SHARED_DATA_DIR}/global/nginx:/var/www
       - ${LL100_SHARED_DATA_DIR}/global/acme.sh:/acme.sh
+    command: daemon
 
 networks:
  traefik:

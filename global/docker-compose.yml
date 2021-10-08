@@ -16,6 +16,7 @@ services:
       - ./traefik/traefik.toml:/traefik.toml
       - ./traefik/acme.json:/acme.json
       - ./traefik/providers:/providers
+      - ${LL100_SHARED_DATA_DIR}/global/acme.sh:/acme.sh
   nginx:
     image: nginx:1.21.3
     labels:
