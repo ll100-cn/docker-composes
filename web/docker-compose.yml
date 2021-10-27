@@ -136,7 +136,6 @@ services:
       file: leaf.yml
       service: latest
     restart: unless-stopped
-    env_file: ./student-host.env
     volumes:
       - ./student-nginx.conf:/etc/nginx/sites-enabled/default
       - ../leaf/40_enable_passenger.sh:/etc/my_init.d/40_enable_passenger.sh

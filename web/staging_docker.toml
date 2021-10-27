@@ -2,35 +2,59 @@
   rule = "Host(`wx.staging.ll100.com`)"
   service = "leaf-wechat@docker"
   [http.routers.leaf-wechat.tls]
-    certResolver="lets-encrypt"
+    options="default"
 
 [http.routers.leaf-frontend]
   rule = "Host(`staging.ll100.com`,`api.staging.ll100.com`,`p3.staging.ll100.com`) && PathPrefix(`/`)"
   service = "leaf-frontend@docker"
   priority=1
   [http.routers.leaf-frontend.tls]
-    certResolver="lets-encrypt"
+    options="default"
 
 [http.routers.leaf-backend]
   rule = "Host(`backend.staging.ll100.com`, `register.staging.ll100.com`)"
   service = "leaf-backend@docker"
   [http.routers.leaf-backend.tls]
-    certResolver="lets-encrypt"
+    options="default"
 
 [http.routers.leaf-school]
   rule = "Host(`school.staging.ll100.com`)"
   service = "leaf-school@docker"
   [http.routers.leaf-school.tls]
-    certResolver="lets-encrypt"
+    options="default"
 
 [http.routers.leaf-student]
   rule = "Host(`staging.ll100.com`) && PathPrefix(`/sb`)"
   service = "leaf-student@docker"
   [http.routers.leaf-student.tls]
-    certResolver="lets-encrypt"
+    options="default"
 
 [http.routers.leaf-teacher]
   rule = "Host(`staging.ll100.com`) && PathPrefix(`/tb`)"
   service = "leaf-teacher@docker"
   [http.routers.leaf-teacher.tls]
-    certResolver="lets-encrypt"
+    options="default"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/staging.ll100.com/staging.ll100.com.key"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/api.staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/api.staging.ll100.com/api.staging.ll100.com.key"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/backend.staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/backend.staging.ll100.com/backend.staging.ll100.com.key"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/school.staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/school.staging.ll100.com/school.staging.ll100.com.key"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/wx.staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/wx.staging.ll100.com/wx.staging.ll100.com.key"
+
+[[tls.certificates]]
+  certFile = "/acme.sh/register.staging.ll100.com/fullchain.cer"
+  keyFile = "/acme.sh/register.staging.ll100.com/register.staging.ll100.com.key

@@ -3,6 +3,7 @@ version: '3'
 services:
   acme.sh:
     image: neilpang/acme.sh:3.0.0
+    container_name: acme.sh
     volumes:
       - ${LL100_SHARED_DATA_DIR}/global/nginx:/var/www
       - ${LL100_SHARED_DATA_DIR}/global/acme.sh:/acme.sh
