@@ -39,22 +39,3 @@
   certFile = "/acme.sh/staging.ll100.com/fullchain.cer"
   keyFile = "/acme.sh/staging.ll100.com/staging.ll100.com.key"
 
-[[tls.certificates]]
-  certFile = "/acme.sh/api.staging.ll100.com/fullchain.cer"
-  keyFile = "/acme.sh/api.staging.ll100.com/api.staging.ll100.com.key"
-
-[[tls.certificates]]
-  certFile = "/acme.sh/backend.staging.ll100.com/fullchain.cer"
-  keyFile = "/acme.sh/backend.staging.ll100.com/backend.staging.ll100.com.key"
-
-[[tls.certificates]]
-  certFile = "/acme.sh/school.staging.ll100.com/fullchain.cer"
-  keyFile = "/acme.sh/school.staging.ll100.com/school.staging.ll100.com.key"
-
-[[tls.certificates]]
-  certFile = "/acme.sh/wx.staging.ll100.com/fullchain.cer"
-  keyFile = "/acme.sh/wx.staging.ll100.com/wx.staging.ll100.com.key"
-
-[[tls.certificates]]
-  certFile = "/acme.sh/register.staging.ll100.com/fullchain.cer"
-  keyFile = "/acme.sh/register.staging.ll100.com/register.staging.ll100.com.key
