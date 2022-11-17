@@ -113,6 +113,26 @@ services:
       - default
       - traefik
 
+  tingshuo:
+    extends:
+      file: leaf.yml
+      service: latest
+    environment:
+      - RAILS_SERVE_STATIC_FILES=yes
+      - APP_CURRENT_PATH=/home/app/www/tingshuo/current
+      - WEB_CONCURRENCY=2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.leaf-tingshuo.rule=Host(`wx.tsbang100.com`)"
+      - "traefik.http.services.leaf-tingshuo.loadbalancer.server.port=80"
+    volumes:
+      - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
+    links:
+      - memcached:memcached
+    networks:
+      - default
+      - traefik
+
   teacher:
     extends:
       file: leaf.yml
