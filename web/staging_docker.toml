@@ -5,7 +5,7 @@
     options="default"
 
 [http.routers.leaf-frontend]
-  rule = "Host(`staging.ll100.com`,`api.staging.ll100.com`,`p3.staging.ll100.com`) && PathPrefix(`/`)"
+  rule = "Host(`staging.ll100.com`,`api.staging.ll100.com`,`gd.staging.ll100.com`,`p3.staging.ll100.com`, `wx.staging.tsbang100.com`) && PathPrefix(`/`)"
   service = "leaf-frontend@docker"
   priority=1
   [http.routers.leaf-frontend.tls]

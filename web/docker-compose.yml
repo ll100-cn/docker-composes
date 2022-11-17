@@ -40,7 +40,7 @@ services:
       - WEB_CONCURRENCY=6
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.leaf-frontend.rule=Host(`${BASE_DOMAIN}`,`api.${BASE_DOMAIN}`,`p3.${BASE_DOMAIN}`) && PathPrefix(`/`)"
+      - "traefik.http.routers.leaf-frontend.rule=Host(`${BASE_DOMAIN}`,`api.${BASE_DOMAIN}`,`p3.${BASE_DOMAIN}`, `gd.${BASE_DOMAIN}`) && PathPrefix(`/`)"
       - "traefik.http.routers.leaf-frontend.priority=1"
       - "traefik.http.services.leaf-frontend.loadbalancer.server.port=80"
     volumes:
@@ -123,7 +123,7 @@ services:
       - WEB_CONCURRENCY=2
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.leaf-tingshuo.rule=Host(`wx.tsbang100.com`)"
+      - "traefik.http.routers.leaf-tingshuo.rule=Host(`wx.staging.tsbang100.com`)"
       - "traefik.http.services.leaf-tingshuo.loadbalancer.server.port=80"
     volumes:
       - ../leaf/40_enable_puma.sh:/etc/my_init.d/40_enable_puma.sh
