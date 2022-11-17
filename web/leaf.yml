@@ -1,7 +1,7 @@
 version: '2'
 services:
   latest:
-    image: ll100cn/leaf:20211217
+    image: ll100cn/leaf:20220721
     restart: unless-stopped
     volumes:
       - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
