@@ -1,4 +1,4 @@
-FROM sunteya/puma:20210104-ruby27
+FROM sunteya/puma:2023-05-11-ruby32
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
