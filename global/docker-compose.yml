@@ -17,6 +17,7 @@ services:
       - ./traefik/acme.json:/acme.json
       - ./traefik/providers:/providers
       - ${LL100_SHARED_DATA_DIR}/global/acme.sh:/acme.sh
+
   nginx:
     image: nginx:1.21.3
     labels:
@@ -26,6 +27,17 @@ services:
       - "traefik.http.services.global-nginx.loadbalancer.server.port=80"
     volumes:
       - ${LL100_SHARED_DATA_DIR}/global/nginx:/usr/share/nginx/html
+    networks:
+      - traefik
+
+  whoami:
+    image: traefik/whoami
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami-http.rule=HostRegexp(`{any:.*}`) && PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami-http.entrypoints=web"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
     networks:
       - traefik
 
