@@ -1,9 +1,9 @@
 version: '2'
 services:
   latest:
-    image: ll100cn/leaf:20220721
+    image: ll100cn/leaf:20230602
     restart: unless-stopped
     volumes:
       - ${LL100_LOCAL_DATA_DIR}/leaf/www:/home/app/www
-      - ${LL100_SHARED_DATA_DIR}/leaf/shared:/home/app/shared
+      - ${LL100_SHARED_DATA_DIR}/leaf-shared:/home/app/shared
       - ${LL100_SHARED_DATA_DIR}/leaf/.ssh:/home/app/.ssh
