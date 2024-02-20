@@ -19,11 +19,6 @@
 [log]
   level= "DEBUG"
 
-[certificatesResolvers.lets-encrypt.acme]
-  email = "admin@ll100.com"
-  storage = "acme.json"
-  [certificatesResolvers.lets-encrypt.acme.tlsChallenge]
-
 [providers.docker]
   watch = true
   exposedByDefault=false
