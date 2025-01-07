@@ -1,4 +1,4 @@
-FROM sunteya/puma:2023-05-11-ruby32
+FROM sunteya/passenger:20241209-ruby32
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
@@ -22,7 +22,7 @@ RUN curl -L https://gist.github.com/Guoxweii/d5ed9a4b15344697b7568f2a9baa04e4/ra
 
 
 # Passenger and Nginx
-COPY nginx-site-default.conf /etc/nginx/sites-available/default
+COPY nginx-site-default.conf /etc/nginx/sites-available/puma
 RUN echo "" > /etc/nginx/passenger.conf
 RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled \
  && mv /etc/logrotate.d/app /etc/logrotate.d/app.disabled \
@@ -33,6 +33,9 @@ RUN mv /etc/logrotate.d/nginx /etc/logrotate.d/nginx.disabled \
 
 # Allow app can login for SSH
 RUN passwd -u app
+
+# Set Environment
+ENV OPENSSL_CONF=/etc/ssl
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
