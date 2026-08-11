@@ -1,4 +1,4 @@
-FROM sunteya/passenger:20250818-ruby34
+FROM sunteya/passenger:20260601-ruby34
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
