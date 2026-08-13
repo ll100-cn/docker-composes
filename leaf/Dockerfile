@@ -8,7 +8,7 @@ RUN apt update # 2020-01-04.1
 RUN apt install -y yasm
 RUN apt install -y wget curl
 RUN apt remove -y imagemagick
-RUN curl -L https://gist.githubusercontent.com/Guoxweii/bb51c6b49ed60ce2c0eb78a6abd74d7a/raw/7126d9a40641eea36d3f809eb77526d141376840/imagemagick_support_heic_format.sh | bash
+RUN curl -L https://gist.githubusercontent.com/Guoxweii/bb51c6b49ed60ce2c0eb78a6abd74d7a/raw/0b2723ebefa1ee6f3a49726f2720577f0db7a153/imagemagick_support_heic_format.sh | bash
 RUN curl -L https://gist.githubusercontent.com/Guoxweii/f19d691f79af94dd8fed074cfa0328a3/raw/03750d3825238d05d7dd7c410e99be7be0635385/install_ffmpeg_with_fdk_aac.sh | env AUTOINSTALL=yes bash
 RUN command -v ffmpeg \
  && command -v ffprobe \
