@@ -1,4 +1,4 @@
-FROM sunteya/passenger:20260601-ruby34
+FROM sunteya/passenger:20261029-ruby34
 
 # SSH
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
@@ -9,7 +9,8 @@ RUN apt install -y yasm
 RUN apt install -y wget curl
 RUN apt remove -y imagemagick
 RUN curl -L https://gist.githubusercontent.com/Guoxweii/bb51c6b49ed60ce2c0eb78a6abd74d7a/raw/0b2723ebefa1ee6f3a49726f2720577f0db7a153/imagemagick_support_heic_format.sh | bash
-RUN curl -L https://gist.githubusercontent.com/Guoxweii/f19d691f79af94dd8fed074cfa0328a3/raw/03750d3825238d05d7dd7c410e99be7be0635385/install_ffmpeg_with_fdk_aac.sh | env AUTOINSTALL=yes bash
+COPY install_ffmpeg_with_fdk_aac.sh /tmp/install_ffmpeg_with_fdk_aac.sh
+RUN bash /tmp/install_ffmpeg_with_fdk_aac.sh
 RUN command -v ffmpeg \
  && command -v ffprobe \
  && ffmpeg -buildconf 2>&1 | grep -- "--enable-libfdk-aac"
